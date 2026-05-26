@@ -3,9 +3,11 @@ import { getProfileFromStorage, saveProfileToStorage, generateRandomProfile, typ
 
 interface ProfileStore {
     profile: Profile;
+    crtEnabled: boolean;
     setProfile: (newProfile: Profile) => void;
     updateEmoji: (emoji: string) => void;
     updateName: (name: string) => void;
+    setCrtEnabled: (enabled: boolean) => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set, get) => {
@@ -16,8 +18,12 @@ export const useProfileStore = create<ProfileStore>((set, get) => {
         saveProfileToStorage(initialProfile);
     }
 
+    const savedCrt = localStorage.getItem('crtEnabled');
+    const crtEnabled = savedCrt === null ? true : savedCrt === 'true';
+
     return {
         profile: initialProfile,
+        crtEnabled,
         
         // 2. Global update functions
         setProfile: (newProfile) => {
@@ -35,6 +41,11 @@ export const useProfileStore = create<ProfileStore>((set, get) => {
             const updated = { ...get().profile, name };
             saveProfileToStorage(updated);
             set({ profile: updated });
+        },
+
+        setCrtEnabled: (enabled) => {
+            localStorage.setItem('crtEnabled', String(enabled));
+            set({ crtEnabled: enabled });
         }
     };
 });

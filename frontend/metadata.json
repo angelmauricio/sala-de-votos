@@ -1,0 +1,6 @@
+{
+  "name": "Sala de Votos",
+  "description": "Um sistema dinâmico votação e chat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
